@@ -100,4 +100,16 @@ public class Game implements IGame {
          currentPlayerIndex = 0;
       }
    }
+
+   public boolean didPlayerWin() {
+       return players.get(currentPlayerIndex).getCoins() == 6;
+   }
+
+   public List<Player> getPlayers() {
+      return players;
+   }
+
+   public int getCurrentPlayerIndex() {
+      return currentPlayerIndex;
+   }
 }
