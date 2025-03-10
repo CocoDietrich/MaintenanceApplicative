@@ -15,7 +15,11 @@ public class Player {
     }
 
     public int getPosition() {
-        return position + 1;
+        if (position == 12) {
+            return 1;
+        } else {
+            return position + 1;
+        }
     }
 
     public int getCoins() {
