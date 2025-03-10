@@ -46,4 +46,12 @@ public class Player {
     public void getOutOfPenaltyBox() {
         inPenaltyBox = false;
     }
+
+    public void resetStreak() {
+        coins = 0;
+    }
+
+    public boolean incrementStreak() {
+        return coins % 2 == 0;
+    }
 }

@@ -151,6 +151,11 @@ public class GameOld implements IGame {
       }
    }
 
+   @Override
+   public boolean handleWrongAnswer() {
+      return false;
+   }
+
    public boolean wrongAnswer() {
       System.out.println("Question was incorrectly answered");
       System.out.println(players.get(currentPlayer) + " was sent to the penalty box");

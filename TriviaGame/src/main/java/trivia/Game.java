@@ -1,9 +1,6 @@
 package trivia;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Game implements IGame {
    private static final int MAX_PLAYERS = 6;
@@ -12,6 +9,7 @@ public class Game implements IGame {
    private final QuestionDeck questionDeck = new QuestionDeck();
    private int currentPlayerIndex = 0;
    private boolean gameStarted = false;
+   private Map<String, Boolean> secondChance = new HashMap<>();
 
    public boolean add(String playerName) {
       if (gameStarted) {
@@ -42,9 +40,10 @@ public class Game implements IGame {
 
       System.out.println(currentPlayer.getName() + " is the current player");
       System.out.println("They have rolled a " + roll);
+      boolean isGettingOutOfPenaltyBox = roll % 2 != 0;
 
       if (currentPlayer.isInPenaltyBox()) {
-         if (roll % 2 != 0) { // Seul un nombre impair peut sortir de la prison
+         if (isGettingOutOfPenaltyBox) { // Seul un nombre impair peut sortir de la prison
             System.out.println(currentPlayer.getName() + " is getting out of the penalty box");
             currentPlayer.getOutOfPenaltyBox();
             currentPlayer.move(roll);
@@ -63,6 +62,7 @@ public class Game implements IGame {
    private void askQuestion() {
       Player currentPlayer = players.get(currentPlayerIndex);
       String category = questionDeck.getCategoryForPosition(currentPlayer.getPosition() - 1);
+      secondChance.put(currentPlayer.getName(), false);
       System.out.println("The category is " + category);
       System.out.println(questionDeck.drawQuestion(category));
    }
@@ -72,26 +72,33 @@ public class Game implements IGame {
       if (!currentPlayer.isInPenaltyBox()) {
          System.out.println("Answer was correct!!!!");
          currentPlayer.addCoin();
+         if (currentPlayer.incrementStreak()) {
+            currentPlayer.addCoin();
+         }
          System.out.println(currentPlayer.getName() + " now has " + currentPlayer.getCoins() + " Gold Coins.");
-         boolean winner = currentPlayer.getCoins() < 6;
+         boolean notAWinner = currentPlayer.getCoins() < 12;
          nextPlayer();
-         return winner;
+         return notAWinner;
       } else {
          nextPlayer();
-         if (currentPlayerIndex >= players.size()) {
-            currentPlayerIndex = 0;
-         }
          return true;
       }
    }
 
-   public boolean wrongAnswer() {
+   public boolean handleWrongAnswer() {
       Player currentPlayer = players.get(currentPlayerIndex);
-      System.out.println("Question was incorrectly answered");
-      System.out.println(currentPlayer.getName() + " was sent to the penalty box");
-      currentPlayer.goToPenaltyBox();
-      nextPlayer();
-      return true;
+      String category = questionDeck.getCategoryForPosition(currentPlayer.getPosition() - 1);
+      if (secondChance.get(currentPlayer.getName()) != null && secondChance.get(currentPlayer.getName())) {
+         System.out.println(currentPlayer.getName() + " failed again and is now in the penalty box");
+         currentPlayer.goToPenaltyBox();
+         currentPlayer.resetStreak();
+         nextPlayer();
+         return true;
+      } else {
+         secondChance.put(currentPlayer.getName(), true);
+         System.out.println(currentPlayer.getName() + " gets a second chance in " + category);
+         return true;
+      }
    }
 
    private void nextPlayer() {
@@ -102,7 +109,7 @@ public class Game implements IGame {
    }
 
    public boolean didPlayerWin() {
-       return players.get(currentPlayerIndex).getCoins() == 6;
+      return players.get(currentPlayerIndex).getCoins() >= 6;
    }
 
    public List<Player> getPlayers() {

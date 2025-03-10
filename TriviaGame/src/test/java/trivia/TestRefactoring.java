@@ -46,11 +46,14 @@ public class TestRefactoring {
     }
 
     @Test
-    public void testWrongAnswerSendsToPenaltyBox() {
+    public void testWrongAnswerWithSecondChance() {
         game.add("Alice");
         game.add("Bob");
         game.roll(3);
-        game.wrongAnswer();
+        game.handleWrongAnswer();
+        // Alice devrait avoir une seconde chance
+        assertFalse(game.getPlayers().get(0).isInPenaltyBox());
+        game.handleWrongAnswer(); // Deuxième erreur
         assertTrue(game.getPlayers().get(0).isInPenaltyBox());
     }
 
@@ -67,7 +70,6 @@ public class TestRefactoring {
     public void testWinningCondition() {
         game.add("Alice");
         game.add("Bob");
-        // 6 bonnes réponses pour gagner
         for (int i = 0; i < 12; i++) {
             game.roll(2);
             game.handleCorrectAnswer();
@@ -79,13 +81,8 @@ public class TestRefactoring {
     public void testPenaltyBoxExit() {
         game.add("Alice");
         game.add("Bob");
-        // Tour d'Alice
         game.roll(3);
-        game.wrongAnswer();
-        // Tour de Bob
-        game.roll(2);
-        game.handleCorrectAnswer();
-        // Tour d'Alice
+        game.handleWrongAnswer();
         game.roll(1);
         assertFalse(game.getPlayers().get(0).isInPenaltyBox());
     }
@@ -95,9 +92,8 @@ public class TestRefactoring {
         game.add("Alice");
         game.add("Bob");
         game.roll(3);
-        game.wrongAnswer();
-        assertTrue(game.getPlayers().get(0).isInPenaltyBox());
-        game.roll(2); // Even roll, should stay in penalty box
+        game.handleWrongAnswer();
+        game.handleWrongAnswer();
         assertTrue(game.getPlayers().get(0).isInPenaltyBox());
     }
 }

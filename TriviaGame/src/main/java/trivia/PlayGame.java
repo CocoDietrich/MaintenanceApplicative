@@ -38,7 +38,7 @@ public class PlayGame {
          if (correct) {
             notAWinner = aGame.handleCorrectAnswer();
          } else {
-            notAWinner = aGame.wrongAnswer();
+            notAWinner = aGame.handleWrongAnswer();
          }
 
       } while (notAWinner);
