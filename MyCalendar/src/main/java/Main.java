@@ -4,6 +4,7 @@ import value_objects.*;
 import event_types.*;
 import java.util.Scanner;
 
+// A refactoriser encore (tout mettre dans MenuActions)
 public class Main {
     public static void main(String[] args) {
         UtilisateurList utilisateurs = new UtilisateurList();
