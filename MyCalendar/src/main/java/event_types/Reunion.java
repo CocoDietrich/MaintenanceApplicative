@@ -20,6 +20,6 @@ public class Reunion extends AbstractEvent {
 
     @Override
     public String description() {
-        return "Réunion: " + titre.getTitre() + " au " + lieu + " avec " + String.join(", ", participants.getParticipants());
+        return "Réunion n°" + this.getId().getId() + " : " + titre.getTitre() + " au lieu " + lieu + " avec " + String.join(", ", participants.getParticipants()) + " le " + dateDebut.getDate();
     }
 }

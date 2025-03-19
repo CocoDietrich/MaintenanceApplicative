@@ -40,7 +40,34 @@ enum MenuActions {
             System.out.println("Événement périodique ajouté.");
         }
     },
-    QUITTER("5") {
+    AFFICHER_PERIODE("5") {
+        @Override
+        void executer(CalendarManager calendar, Scanner scanner) {
+            System.out.print("Date de début (AAAA-MM-JJ HH:mm) : ");
+            DateEvenement debut = demanderDate(scanner);
+            System.out.print("Date de fin (AAAA-MM-JJ HH:mm) : ");
+            DateEvenement fin = demanderDate(scanner);
+            calendar.eventsDansPeriode(debut, fin).displayEvents();
+        }
+    },
+    VERIFIER_CONFLITS("6") {
+        @Override
+        void executer(CalendarManager calendar, Scanner scanner) {
+            if (!calendar.events.detectConflicts()) {
+                System.out.println("Aucun conflit détecté.");
+            }
+        }
+    },
+    SUPPRIMER_EVENT("7") {
+        @Override
+        void executer(CalendarManager calendar, Scanner scanner) {
+            System.out.print("Entrez l'ID de l'événement à supprimer : ");
+            String id = scanner.nextLine();
+            calendar.events.removeById(id);
+            System.out.println("Événement supprimé.");
+        }
+    },
+    QUITTER("8") {
         @Override
         void executer(CalendarManager calendar, Scanner scanner) {
             System.exit(0);

@@ -36,4 +36,18 @@ public abstract class AbstractEvent implements Event {
         boolean isBeforeOrEqual = getFin().isBefore(end.getDate()) || getFin().isEqual(end.getDate());
         return isAfterOrEqual && isBeforeOrEqual;
     }
+
+    @Override
+    public boolean isInConflict(Event event) {
+        if (event instanceof AbstractEvent) {
+            AbstractEvent other = (AbstractEvent) event;
+            boolean startsDuring = dateDebut.getDate().isBefore(other.getFin()) && dateDebut.getDate().isAfter(other.dateDebut.getDate());
+            boolean startsAtSameTime = dateDebut.getDate().isEqual(other.dateDebut.getDate());
+            boolean endsDuring = getFin().isAfter(other.dateDebut.getDate()) && getFin().isBefore(other.getFin());
+            boolean endsAtSameTime = getFin().isEqual(other.getFin());
+            boolean completelyOverlaps = dateDebut.getDate().isBefore(other.dateDebut.getDate()) && getFin().isAfter(other.getFin());
+            return startsDuring || startsAtSameTime || endsDuring || endsAtSameTime || completelyOverlaps;
+        }
+        return false;
+    }
 }

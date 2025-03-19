@@ -8,4 +8,5 @@ public interface Event {
     EventId getId();
     String description();
     boolean isInPeriod(DateEvenement start, DateEvenement end);
+    boolean isInConflict(Event event);
 }

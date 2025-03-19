@@ -5,7 +5,7 @@ import value_objects.EventList;
 
 // Gestionnaire de calendrier
 class CalendarManager {
-    private final EventList events;
+    final EventList events;
 
     public CalendarManager() {
         this.events = new EventList();

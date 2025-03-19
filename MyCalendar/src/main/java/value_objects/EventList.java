@@ -42,4 +42,27 @@ public class EventList {
             System.out.println(e.description());
         }
     }
+
+    // Méthode permettant de détecter les conflits entre les événements (chevauchement horaire)
+    public boolean detectConflicts() {
+        for (int i = 0; i < events.size(); i++) {
+            for (int j = i + 1; j < events.size(); j++) {
+                if (events.get(i).isInConflict(events.get(j))) {
+                    System.out.println("Conflit entre : " + events.get(i).description() + " et " + events.get(j).description());
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // Supprime un événement par son identifiant
+    public void removeById(String id) {
+        for (Event e : events) {
+            if (e.getId().getId().equals(id)) {
+                events.remove(e);
+                return;
+            }
+        }
+    }
 }

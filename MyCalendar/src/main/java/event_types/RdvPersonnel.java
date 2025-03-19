@@ -12,6 +12,6 @@ public class RdvPersonnel extends AbstractEvent {
 
     @Override
     public String description() {
-        return "RDV Personnel: " + titre.getTitre() + " à " + dateDebut.getDate();
+        return "RDV Personnel n°" + this.getId().getId() + " : " + titre.getTitre() + " le " + dateDebut.getDate();
     }
 }

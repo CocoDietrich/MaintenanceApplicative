@@ -15,6 +15,6 @@ public class EvenementPeriodique extends AbstractEvent {
 
     @Override
     public String description() {
-        return "Événement périodique: " + titre.getTitre() + " tous les " + frequenceJours.getFrequenceJours() + " jours";
+        return "Événement périodique n°" + this.getId().getId() + " : " + titre.getTitre() + " tous les " + frequenceJours.getFrequenceJours() + " jours à partir du " + dateDebut.getDate();
     }
 }
