@@ -67,7 +67,13 @@ enum MenuActions {
             System.out.println("Événement supprimé.");
         }
     },
-    QUITTER("8") {
+    CHANGER_UTILISATEUR("8") {
+        @Override
+        void executer(CalendarManager calendar, Scanner scanner) {
+            System.out.println("Changement d'utilisateur.");
+        }
+    },
+    QUITTER("9") {
         @Override
         void executer(CalendarManager calendar, Scanner scanner) {
             System.exit(0);
