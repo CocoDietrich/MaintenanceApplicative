@@ -1,11 +1,12 @@
-import event_types.AbstractEvent;
+package main;
+
 import event_types.Event;
 import value_objects.DateEvenement;
 import value_objects.EventList;
 
 // Gestionnaire de calendrier
-class CalendarManager {
-    final EventList events;
+public class CalendarManager {
+    public final EventList events;
 
     public CalendarManager() {
         this.events = new EventList();
