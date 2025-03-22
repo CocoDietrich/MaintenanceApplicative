@@ -65,4 +65,8 @@ public class EventList {
             }
         }
     }
+
+    public int size() {
+        return events.size();
+    }
 }
