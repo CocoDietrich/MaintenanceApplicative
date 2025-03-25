@@ -4,7 +4,8 @@ import value_objects.DateEvenement;
 import value_objects.DureeEvenement;
 import value_objects.TitreEvenement;
 
-public class Anniversaire extends  AbstractEvent{
+
+public class Anniversaire extends AbstractEvent {
 
     public Anniversaire(TitreEvenement titre, DateEvenement dateDebut, DureeEvenement duree) {
         super(titre, dateDebut, duree);
@@ -12,6 +13,6 @@ public class Anniversaire extends  AbstractEvent{
 
     @Override
     public String description() {
-        return "Anniversaire: " + titre.getTitre() + " le " + dateDebut.getDate().getDayOfMonth() + "/" + dateDebut.getDate().getMonthValue() + "/" + dateDebut.getDate().getYear();
+        return "Anniversaire n°" + this.getId().getId() + " : " + titre.getTitre() + " le " + dateDebut.getDate().toString().split("T")[0];
     }
 }

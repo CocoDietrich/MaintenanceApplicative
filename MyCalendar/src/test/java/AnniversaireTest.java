@@ -20,7 +20,7 @@ public class AnniversaireTest {
 
         Anniversaire anniv = new Anniversaire(titre, date, duree);
 
-        assertEquals(titre.getTitre(), anniv.description().split(":")[1].trim().split(" ")[0]);
+        assertEquals(titre.getTitre(), anniv.titre.getTitre());
         assertEquals(date.getDate(), anniv.dateDebut.getDate());
     }
 

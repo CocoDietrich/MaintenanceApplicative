@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 // Classe abstraite pour factoriser les événements
 public abstract class AbstractEvent implements Event {
     protected final EventId id;
-    protected final TitreEvenement titre;
+    public final TitreEvenement titre;
     public final DateEvenement dateDebut;
     protected final DureeEvenement duree;
 

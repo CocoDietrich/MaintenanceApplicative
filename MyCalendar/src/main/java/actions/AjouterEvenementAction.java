@@ -16,6 +16,7 @@ public class AjouterEvenementAction implements Action {
         System.out.println("1 - RDV Personnel");
         System.out.println("2 - Réunion");
         System.out.println("3 - Événement périodique");
+        System.out.println("4 - Anniversaire");
         System.out.print("Votre choix : ");
 
         String choix = scanner.nextLine();
@@ -23,6 +24,7 @@ public class AjouterEvenementAction implements Action {
             case "1" -> ajouterRDV(calendar, scanner);
             case "2" -> ajouterReunion(calendar, scanner);
             case "3" -> ajouterPeriodique(calendar, scanner);
+            case "4" -> ajouterAnniversaire(calendar, scanner);
             default -> System.out.println("Type d'événement inconnu.");
         }
     }
@@ -61,6 +63,13 @@ public class AjouterEvenementAction implements Action {
         System.out.println("Événement périodique ajouté.");
     }
 
+    private void ajouterAnniversaire(CalendarManager calendar, Scanner scanner) {
+        TitreEvenement titre = demanderTitre(scanner);
+        DateEvenement date = demanderDateAnniversaire(scanner);
+        calendar.ajouterEvent(new Anniversaire(titre, date, new DureeEvenement(1440)));
+        System.out.println("Anniversaire ajouté.");
+    }
+
     private TitreEvenement demanderTitre(Scanner scanner) {
         System.out.print("Titre : ");
         return new TitreEvenement(scanner.nextLine());
@@ -79,6 +88,18 @@ public class AjouterEvenementAction implements Action {
         System.out.print("Minute : ");
         int minute = Integer.parseInt(scanner.nextLine());
         return new DateEvenement(LocalDateTime.of(annee, mois, jour, heure, minute));
+    }
+
+    // Pour les anniversaires, pas besoin de demander l'heure
+    private DateEvenement demanderDateAnniversaire(Scanner scanner) {
+        System.out.println("Date de l’événement : ");
+        System.out.print("Année : ");
+        int annee = Integer.parseInt(scanner.nextLine());
+        System.out.print("Mois : ");
+        int mois = Integer.parseInt(scanner.nextLine());
+        System.out.print("Jour : ");
+        int jour = Integer.parseInt(scanner.nextLine());
+        return new DateEvenement(LocalDateTime.of(annee, mois, jour, 0, 0));
     }
 
     private DureeEvenement demanderDuree(Scanner scanner) {
